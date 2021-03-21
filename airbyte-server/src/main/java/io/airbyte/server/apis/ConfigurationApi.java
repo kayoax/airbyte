@@ -79,7 +79,7 @@ import io.airbyte.config.persistence.ConfigNotFoundException;
 import io.airbyte.config.persistence.ConfigRepository;
 import io.airbyte.scheduler.client.CachingSynchronousSchedulerClient;
 import io.airbyte.scheduler.client.SchedulerJobClient;
-import io.airbyte.scheduler.persistence.JobPersistence;
+import io.airbyte.scheduler.db.persistence.JobPersistence;
 import io.airbyte.server.converters.SpecFetcher;
 import io.airbyte.server.errors.KnownException;
 import io.airbyte.server.handlers.ArchiveHandler;

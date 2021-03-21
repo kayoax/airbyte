@@ -33,7 +33,7 @@ import io.airbyte.commons.version.AirbyteVersion;
 import io.airbyte.config.persistence.ConfigNotFoundException;
 import io.airbyte.config.persistence.ConfigRepository;
 import io.airbyte.config.persistence.PersistenceConstants;
-import io.airbyte.scheduler.persistence.JobPersistence;
+import io.airbyte.scheduler.db.persistence.JobPersistence;
 import io.airbyte.server.converters.ConfigFileArchiver;
 import io.airbyte.server.converters.DatabaseArchiver;
 import io.airbyte.validation.json.JsonValidationException;

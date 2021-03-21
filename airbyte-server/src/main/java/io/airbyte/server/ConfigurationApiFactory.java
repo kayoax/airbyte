@@ -29,7 +29,7 @@ import io.airbyte.config.Configs;
 import io.airbyte.config.persistence.ConfigRepository;
 import io.airbyte.scheduler.client.CachingSynchronousSchedulerClient;
 import io.airbyte.scheduler.client.SchedulerJobClient;
-import io.airbyte.scheduler.persistence.JobPersistence;
+import io.airbyte.scheduler.db.persistence.JobPersistence;
 import io.airbyte.server.apis.ConfigurationApi;
 import java.util.Map;
 import org.glassfish.hk2.api.Factory;

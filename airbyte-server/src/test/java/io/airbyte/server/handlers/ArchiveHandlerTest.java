@@ -31,7 +31,7 @@ import static org.mockito.Mockito.verify;
 
 import io.airbyte.commons.io.FileTtlManager;
 import io.airbyte.config.persistence.ConfigRepository;
-import io.airbyte.scheduler.persistence.JobPersistence;
+import io.airbyte.scheduler.db.persistence.JobPersistence;
 import io.airbyte.validation.json.JsonValidationException;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
