@@ -30,9 +30,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import io.airbyte.config.WorkspaceRetentionConfig;
-import io.airbyte.scheduler.data.Job;
-import io.airbyte.scheduler.data.JobStatus;
-import io.airbyte.scheduler.db.persistence.JobPersistence;
+import io.airbyte.scheduler.models.Job;
+import io.airbyte.scheduler.models.JobStatus;
+import io.airbyte.scheduler.persistence.JobPersistence;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;

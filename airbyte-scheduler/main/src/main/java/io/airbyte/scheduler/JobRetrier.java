@@ -24,9 +24,9 @@
 
 package io.airbyte.scheduler;
 
-import io.airbyte.scheduler.data.Job;
-import io.airbyte.scheduler.data.JobStatus;
-import io.airbyte.scheduler.db.persistence.JobPersistence;
+import io.airbyte.scheduler.models.Job;
+import io.airbyte.scheduler.models.JobStatus;
+import io.airbyte.scheduler.persistence.JobPersistence;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.List;

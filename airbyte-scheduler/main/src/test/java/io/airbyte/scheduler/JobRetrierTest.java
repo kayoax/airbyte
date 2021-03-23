@@ -30,9 +30,9 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import io.airbyte.config.JobConfig;
-import io.airbyte.scheduler.data.Job;
-import io.airbyte.scheduler.data.JobStatus;
-import io.airbyte.scheduler.db.persistence.JobPersistence;
+import io.airbyte.scheduler.models.Job;
+import io.airbyte.scheduler.models.JobStatus;
+import io.airbyte.scheduler.persistence.JobPersistence;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;

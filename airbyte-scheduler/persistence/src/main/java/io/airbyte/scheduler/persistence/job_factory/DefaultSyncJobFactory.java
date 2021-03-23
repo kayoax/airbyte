@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler.db.job_factory;
+package io.airbyte.scheduler.persistence.job_factory;
 
 import io.airbyte.commons.docker.DockerUtils;
 import io.airbyte.config.DestinationConnection;
@@ -32,7 +32,7 @@ import io.airbyte.config.StandardSourceDefinition;
 import io.airbyte.config.StandardSync;
 import io.airbyte.config.persistence.ConfigNotFoundException;
 import io.airbyte.config.persistence.ConfigRepository;
-import io.airbyte.scheduler.db.persistence.DefaultJobCreator;
+import io.airbyte.scheduler.persistence.DefaultJobCreator;
 import io.airbyte.validation.json.JsonValidationException;
 import java.io.IOException;
 import java.util.UUID;

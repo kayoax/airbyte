@@ -22,45 +22,20 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler.db.persistence;
+package io.airbyte.scheduler.models;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import io.airbyte.commons.json.JsonSchemas;
-import io.airbyte.validation.json.JsonSchemaValidator;
-import java.io.File;
-import java.nio.file.Path;
+import com.google.common.collect.Sets;
+import java.util.Set;
 
-/**
- * Whenever a new table is created in the Airbyte Database, we should also add a corresponding yaml
- * file to validate the content of the table when it is exported/imported in files.
- *
- * This enum maps the table names to the yaml file where the Json Schema is stored.
- */
-public enum DatabaseSchema {
+public enum JobStatus {
 
-  // Attempts
-  ATTEMPTS("Attempts.yaml"),
+  PENDING,
+  RUNNING,
+  INCOMPLETE,
+  FAILED,
+  SUCCEEDED,
+  CANCELLED;
 
-  // Jobs
-  JOBS("Jobs.yaml"),
-
-  // AirbyteMetadata
-  AIRBYTE_METADATA("AirbyteMetadata.yaml");
-
-  static final Path KNOWN_SCHEMAS_ROOT = JsonSchemas.prepareSchemas("tables", DatabaseSchema.class);
-
-  private final String schemaFilename;
-
-  DatabaseSchema(final String schemaFilename) {
-    this.schemaFilename = schemaFilename;
-  }
-
-  public File getFile() {
-    return KNOWN_SCHEMAS_ROOT.resolve(schemaFilename).toFile();
-  }
-
-  public JsonNode toJsonNode() {
-    return JsonSchemaValidator.getSchema(getFile());
-  }
+  public static Set<JobStatus> TERMINAL_STATUSES = Sets.newHashSet(FAILED, SUCCEEDED, CANCELLED);
 
 }

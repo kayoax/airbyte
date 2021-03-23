@@ -31,8 +31,8 @@ import static org.mockito.Mockito.when;
 
 import io.airbyte.config.Schedule;
 import io.airbyte.config.StandardSyncSchedule;
-import io.airbyte.scheduler.data.Job;
-import io.airbyte.scheduler.data.JobStatus;
+import io.airbyte.scheduler.models.Job;
+import io.airbyte.scheduler.models.JobStatus;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;

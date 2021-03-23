@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler.db.persistence;
+package io.airbyte.scheduler.persistence;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.airbyte.config.JobConfig;
 import io.airbyte.config.State;
-import io.airbyte.scheduler.data.Job;
-import io.airbyte.scheduler.data.JobStatus;
+import io.airbyte.scheduler.models.Job;
+import io.airbyte.scheduler.models.JobStatus;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;

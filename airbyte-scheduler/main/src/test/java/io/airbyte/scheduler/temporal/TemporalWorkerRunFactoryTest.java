@@ -38,7 +38,7 @@ import io.airbyte.config.JobResetConnectionConfig;
 import io.airbyte.config.JobSyncConfig;
 import io.airbyte.config.StandardSyncOutput;
 import io.airbyte.protocol.models.ConfiguredAirbyteCatalog;
-import io.airbyte.scheduler.data.Job;
+import io.airbyte.scheduler.models.Job;
 import io.airbyte.scheduler.worker_run.TemporalWorkerRunFactory;
 import io.airbyte.scheduler.worker_run.WorkerRun;
 import io.airbyte.workers.WorkerConstants;

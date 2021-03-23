@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler.db.job_factory;
+package io.airbyte.scheduler.persistence.job_factory;
 
 import java.util.UUID;
 

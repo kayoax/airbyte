@@ -22,31 +22,45 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler.client;
+package io.airbyte.scheduler.persistence;
 
-import io.airbyte.config.DestinationConnection;
-import io.airbyte.config.SourceConnection;
-import io.airbyte.config.StandardSync;
-import io.airbyte.scheduler.models.Job;
-import java.io.IOException;
+import com.fasterxml.jackson.databind.JsonNode;
+import io.airbyte.commons.json.JsonSchemas;
+import io.airbyte.validation.json.JsonSchemaValidator;
+import java.io.File;
+import java.nio.file.Path;
 
 /**
- * Exposes a way of executing short-lived jobs as RPC calls. If it returns successfully, it
- * guarantees a job was submitted. It does not wait for that job to complete. Jobs submitted in by
- * this client are persisted in the Jobs table. It returns the full job object.
+ * Whenever a new table is created in the Airbyte Database, we should also add a corresponding yaml
+ * file to validate the content of the table when it is exported/imported in files.
+ *
+ * This enum maps the table names to the yaml file where the Json Schema is stored.
  */
-public interface SchedulerJobClient {
+public enum DatabaseSchema {
 
-  Job createOrGetActiveSyncJob(SourceConnection source,
-                               DestinationConnection destination,
-                               StandardSync standardSync,
-                               String sourceDockerImage,
-                               String destinationDockerImage)
-      throws IOException;
+  // Attempts
+  ATTEMPTS("Attempts.yaml"),
 
-  Job createOrGetActiveResetConnectionJob(DestinationConnection destination,
-                                          StandardSync standardSync,
-                                          String destinationDockerImage)
-      throws IOException;
+  // Jobs
+  JOBS("Jobs.yaml"),
+
+  // AirbyteMetadata
+  AIRBYTE_METADATA("AirbyteMetadata.yaml");
+
+  static final Path KNOWN_SCHEMAS_ROOT = JsonSchemas.prepareSchemas("tables", DatabaseSchema.class);
+
+  private final String schemaFilename;
+
+  DatabaseSchema(final String schemaFilename) {
+    this.schemaFilename = schemaFilename;
+  }
+
+  public File getFile() {
+    return KNOWN_SCHEMAS_ROOT.resolve(schemaFilename).toFile();
+  }
+
+  public JsonNode toJsonNode() {
+    return JsonSchemaValidator.getSchema(getFile());
+  }
 
 }

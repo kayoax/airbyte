@@ -22,31 +22,17 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler.client;
+package io.airbyte.scheduler.models;
 
-import io.airbyte.config.DestinationConnection;
-import io.airbyte.config.SourceConnection;
-import io.airbyte.config.StandardSync;
-import io.airbyte.scheduler.models.Job;
-import java.io.IOException;
+import com.google.common.collect.Sets;
+import java.util.Set;
 
-/**
- * Exposes a way of executing short-lived jobs as RPC calls. If it returns successfully, it
- * guarantees a job was submitted. It does not wait for that job to complete. Jobs submitted in by
- * this client are persisted in the Jobs table. It returns the full job object.
- */
-public interface SchedulerJobClient {
+public enum AttemptStatus {
 
-  Job createOrGetActiveSyncJob(SourceConnection source,
-                               DestinationConnection destination,
-                               StandardSync standardSync,
-                               String sourceDockerImage,
-                               String destinationDockerImage)
-      throws IOException;
+  RUNNING,
+  FAILED,
+  SUCCEEDED;
 
-  Job createOrGetActiveResetConnectionJob(DestinationConnection destination,
-                                          StandardSync standardSync,
-                                          String destinationDockerImage)
-      throws IOException;
+  public static Set<AttemptStatus> TERMINAL_STATUSES = Sets.newHashSet(FAILED, SUCCEEDED);
 
 }

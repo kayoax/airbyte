@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler.db.persistence;
+package io.airbyte.scheduler.persistence;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
@@ -41,10 +41,10 @@ import io.airbyte.config.StandardSyncOutput;
 import io.airbyte.config.State;
 import io.airbyte.db.Database;
 import io.airbyte.db.ExceptionWrappingDatabase;
-import io.airbyte.scheduler.data.Attempt;
-import io.airbyte.scheduler.data.AttemptStatus;
-import io.airbyte.scheduler.data.Job;
-import io.airbyte.scheduler.data.JobStatus;
+import io.airbyte.scheduler.models.Attempt;
+import io.airbyte.scheduler.models.AttemptStatus;
+import io.airbyte.scheduler.models.Job;
+import io.airbyte.scheduler.models.JobStatus;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Path;

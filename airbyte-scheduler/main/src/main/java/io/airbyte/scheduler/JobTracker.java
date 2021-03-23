@@ -40,7 +40,7 @@ import io.airbyte.config.StandardSyncSchedule;
 import io.airbyte.config.helpers.ScheduleHelpers;
 import io.airbyte.config.persistence.ConfigNotFoundException;
 import io.airbyte.config.persistence.ConfigRepository;
-import io.airbyte.scheduler.data.Job;
+import io.airbyte.scheduler.models.Job;
 import io.airbyte.validation.json.JsonValidationException;
 import java.io.IOException;
 import java.util.Map;
