@@ -5,6 +5,7 @@ plugins {
 dependencies {
     implementation 'io.temporal:temporal-sdk:1.0.4'
 
+    implementation project(':airbyte-analytics')
     implementation project(':airbyte-config:models')
     implementation project(':airbyte-config:persistence')
     implementation project(':airbyte-db')
@@ -18,6 +19,7 @@ dependencies {
 }
 
 application {
+    applicationName = "airbyte-scheduler"
     mainClass = 'io.airbyte.scheduler.SchedulerApp'
 }
 
