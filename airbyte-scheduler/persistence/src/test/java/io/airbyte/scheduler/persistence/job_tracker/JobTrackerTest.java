@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler;
+package io.airbyte.scheduler.persistence.job_tracker;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -41,8 +41,8 @@ import io.airbyte.config.StandardSourceDefinition;
 import io.airbyte.config.StandardSyncSchedule;
 import io.airbyte.config.persistence.ConfigNotFoundException;
 import io.airbyte.config.persistence.ConfigRepository;
-import io.airbyte.scheduler.JobTracker.JobState;
 import io.airbyte.scheduler.models.Job;
+import io.airbyte.scheduler.persistence.job_tracker.JobTracker.JobState;
 import io.airbyte.validation.json.JsonValidationException;
 import java.io.IOException;
 import java.util.Map;

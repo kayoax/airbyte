@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler.db.persistence;
+package io.airbyte.scheduler.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -47,9 +47,6 @@ import io.airbyte.protocol.models.ConfiguredAirbyteCatalog;
 import io.airbyte.protocol.models.ConfiguredAirbyteStream;
 import io.airbyte.protocol.models.Field;
 import io.airbyte.protocol.models.Field.JsonSchemaPrimitive;
-import io.airbyte.scheduler.persistence.DefaultJobCreator;
-import io.airbyte.scheduler.persistence.JobCreator;
-import io.airbyte.scheduler.persistence.JobPersistence;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;

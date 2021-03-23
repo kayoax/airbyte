@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler;
+package io.airbyte.scheduler.persistence.job_tracker;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;

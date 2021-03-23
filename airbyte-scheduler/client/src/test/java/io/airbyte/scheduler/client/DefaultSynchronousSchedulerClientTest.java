@@ -47,6 +47,7 @@ import io.airbyte.config.SourceConnection;
 import io.airbyte.config.StandardCheckConnectionOutput;
 import io.airbyte.protocol.models.AirbyteCatalog;
 import io.airbyte.protocol.models.ConnectorSpecification;
+import io.airbyte.scheduler.persistence.job_tracker.JobTracker;
 import io.airbyte.workers.temporal.JobMetadata;
 import io.airbyte.workers.temporal.TemporalClient;
 import io.airbyte.workers.temporal.TemporalResponse;
@@ -82,14 +83,14 @@ class DefaultSynchronousSchedulerClientTest {
       .withConfiguration(CONFIGURATION);
 
   private TemporalClient temporalClient;
-  // private JobTracker jobTracker;
+  private JobTracker jobTracker;
   private DefaultSynchronousSchedulerClient schedulerClient;
 
   @BeforeEach
   void setup() {
     temporalClient = mock(TemporalClient.class);
-    // jobTracker = mock(JobTracker.class);
-    schedulerClient = new DefaultSynchronousSchedulerClient(temporalClient, null);
+    jobTracker = mock(JobTracker.class);
+    schedulerClient = new DefaultSynchronousSchedulerClient(temporalClient, jobTracker);
   }
 
   private static JobMetadata createMetadata(boolean succeeded) {

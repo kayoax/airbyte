@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.airbyte.scheduler.db.job_factory;
+package io.airbyte.scheduler.persistence.job_factory;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -38,8 +38,6 @@ import io.airbyte.config.StandardSync;
 import io.airbyte.config.persistence.ConfigNotFoundException;
 import io.airbyte.config.persistence.ConfigRepository;
 import io.airbyte.scheduler.persistence.DefaultJobCreator;
-import io.airbyte.scheduler.persistence.job_factory.DefaultSyncJobFactory;
-import io.airbyte.scheduler.persistence.job_factory.SyncJobFactory;
 import io.airbyte.validation.json.JsonValidationException;
 import java.io.IOException;
 import java.util.Optional;

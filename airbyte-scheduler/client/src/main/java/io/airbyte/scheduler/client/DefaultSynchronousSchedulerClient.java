@@ -34,6 +34,8 @@ import io.airbyte.config.SourceConnection;
 import io.airbyte.config.StandardCheckConnectionOutput;
 import io.airbyte.protocol.models.AirbyteCatalog;
 import io.airbyte.protocol.models.ConnectorSpecification;
+import io.airbyte.scheduler.persistence.job_tracker.JobTracker;
+import io.airbyte.scheduler.persistence.job_tracker.JobTracker.JobState;
 import io.airbyte.workers.temporal.TemporalClient;
 import io.airbyte.workers.temporal.TemporalResponse;
 import java.io.IOException;
@@ -44,12 +46,11 @@ import java.util.function.Function;
 public class DefaultSynchronousSchedulerClient implements SynchronousSchedulerClient {
 
   private final TemporalClient temporalClient;
-  // private final JobTracker jobTracker;
+  private final JobTracker jobTracker;
 
-  // todo remove
-  public DefaultSynchronousSchedulerClient(TemporalClient temporalClient, Object jobTracker) {
+  public DefaultSynchronousSchedulerClient(TemporalClient temporalClient, JobTracker jobTracker) {
     this.temporalClient = temporalClient;
-    // this.jobTracker = jobTracker;
+    this.jobTracker = jobTracker;
   }
 
   @Override
@@ -112,12 +113,10 @@ public class DefaultSynchronousSchedulerClient implements SynchronousSchedulerCl
     final long createdAt = Instant.now().toEpochMilli();
     final UUID jobId = UUID.randomUUID();
     try {
-      // todo (cgardens) - move tracking to core.
-      // track(jobId, configType, jobTrackerId, JobState.STARTED, null);
+      track(jobId, configType, jobTrackerId, JobState.STARTED, null);
       final TemporalResponse<T> operationOutput = executor.apply(jobId);
-      // JobState outputState = operationOutput.getMetadata().isSucceeded() ? JobState.SUCCEEDED :
-      // JobState.FAILED;
-      // track(jobId, configType, jobTrackerId, outputState, operationOutput.getOutput().orElse(null));
+      JobState outputState = operationOutput.getMetadata().isSucceeded() ? JobState.SUCCEEDED : JobState.FAILED;
+      track(jobId, configType, jobTrackerId, outputState, operationOutput.getOutput().orElse(null));
       final long endedAt = Instant.now().toEpochMilli();
 
       return SynchronousResponse.fromTemporalResponse(
@@ -128,29 +127,24 @@ public class DefaultSynchronousSchedulerClient implements SynchronousSchedulerCl
           createdAt,
           endedAt);
     } catch (RuntimeException e) {
-      // todo handle null.
-      // track(jobId, configType, jobTrackerId, JobState.FAILED, null);
+      track(jobId, configType, jobTrackerId, JobState.FAILED, null);
       throw e;
     }
   }
 
-  // private <T> void track(UUID jobId, ConfigType configType, UUID jobTrackerId, JobState jobState, T
-  // value) {
-  // switch (configType) {
-  // case CHECK_CONNECTION_SOURCE -> jobTracker.trackCheckConnectionSource(jobId, jobTrackerId,
-  // jobState, (StandardCheckConnectionOutput) value);
-  // case CHECK_CONNECTION_DESTINATION -> jobTracker.trackCheckConnectionDestination(jobId,
-  // jobTrackerId, jobState,
-  // (StandardCheckConnectionOutput) value);
-  // case DISCOVER_SCHEMA -> jobTracker.trackDiscover(jobId, jobTrackerId, jobState);
-  // case GET_SPEC -> {
-  // // skip tracking for get spec to avoid noise.
-  // }
-  // default -> throw new IllegalArgumentException(
-  // String.format("Jobs of type %s cannot be processed here. They should be consumed in the
-  // JobSubmitter.", configType));
-  // }
-  //
-  // }
+  private <T> void track(UUID jobId, ConfigType configType, UUID jobTrackerId, JobState jobState, T value) {
+    switch (configType) {
+      case CHECK_CONNECTION_SOURCE -> jobTracker.trackCheckConnectionSource(jobId, jobTrackerId, jobState, (StandardCheckConnectionOutput) value);
+      case CHECK_CONNECTION_DESTINATION -> jobTracker.trackCheckConnectionDestination(jobId, jobTrackerId, jobState,
+          (StandardCheckConnectionOutput) value);
+      case DISCOVER_SCHEMA -> jobTracker.trackDiscover(jobId, jobTrackerId, jobState);
+      case GET_SPEC -> {
+        // skip tracking for get spec to avoid noise.
+      }
+      default -> throw new IllegalArgumentException(
+          String.format("Jobs of type %s cannot be processed here. They should be consumed in the JobSubmitter.", configType));
+    }
+
+  }
 
 }
