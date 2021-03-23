@@ -33,6 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -48,6 +49,7 @@ import io.airbyte.config.StandardCheckConnectionOutput;
 import io.airbyte.protocol.models.AirbyteCatalog;
 import io.airbyte.protocol.models.ConnectorSpecification;
 import io.airbyte.scheduler.persistence.job_tracker.JobTracker;
+import io.airbyte.scheduler.persistence.job_tracker.JobTracker.JobState;
 import io.airbyte.workers.temporal.JobMetadata;
 import io.airbyte.workers.temporal.TemporalClient;
 import io.airbyte.workers.temporal.TemporalResponse;
@@ -121,8 +123,8 @@ class DefaultSynchronousSchedulerClientTest {
       assertTrue(response.getMetadata().isSucceeded());
       assertEquals(LOG_PATH, response.getMetadata().getLogPath());
 
-      // verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.STARTED));
-      // verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.SUCCEEDED));
+      verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.STARTED));
+      verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.SUCCEEDED));
     }
 
     @SuppressWarnings("unchecked")
@@ -143,8 +145,8 @@ class DefaultSynchronousSchedulerClientTest {
       assertFalse(response.getMetadata().isSucceeded());
       assertEquals(LOG_PATH, response.getMetadata().getLogPath());
 
-      // verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.STARTED));
-      // verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.FAILED));
+      verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.STARTED));
+      verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.FAILED));
     }
 
     @SuppressWarnings("unchecked")
@@ -157,8 +159,8 @@ class DefaultSynchronousSchedulerClientTest {
 
       assertThrows(RuntimeException.class, () -> schedulerClient.execute(ConfigType.DISCOVER_SCHEMA, configId, function, jobTrackingId));
 
-      // verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.STARTED));
-      // verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.FAILED));
+      verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.STARTED));
+      verify(jobTracker).trackDiscover(any(UUID.class), eq(jobTrackingId), eq(JobState.FAILED));
     }
 
   }
