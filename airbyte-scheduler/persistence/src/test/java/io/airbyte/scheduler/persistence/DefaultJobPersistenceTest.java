@@ -25,6 +25,7 @@
 package io.airbyte.scheduler.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -72,7 +73,6 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -229,7 +229,7 @@ class DefaultJobPersistenceTest {
 
     final Job updated = jobPersistence.getJob(jobId);
     assertEquals(Optional.of(jobOutput), updated.getAttempts().get(0).getOutput());
-    Assertions.assertNotEquals(created.getAttempts().get(0).getUpdatedAtInSecond(), updated.getAttempts().get(0).getUpdatedAtInSecond());
+    assertNotEquals(created.getAttempts().get(0).getUpdatedAtInSecond(), updated.getAttempts().get(0).getUpdatedAtInSecond());
   }
 
   @Test
@@ -351,7 +351,7 @@ class DefaultJobPersistenceTest {
 
       final Job updated = jobPersistence.getJob(jobId);
       assertEquals(JobStatus.CANCELLED, updated.getStatus());
-      Assertions.assertNotEquals(created.getUpdatedAtInSecond(), updated.getUpdatedAtInSecond());
+      assertNotEquals(created.getUpdatedAtInSecond(), updated.getUpdatedAtInSecond());
     }
 
     @Test
@@ -505,7 +505,7 @@ class DefaultJobPersistenceTest {
 
       final Job updated = jobPersistence.getJob(jobId);
       assertEquals(JobStatus.FAILED, updated.getStatus());
-      Assertions.assertNotEquals(created.getUpdatedAtInSecond(), updated.getUpdatedAtInSecond());
+      assertNotEquals(created.getUpdatedAtInSecond(), updated.getUpdatedAtInSecond());
     }
 
     @Test
@@ -929,7 +929,7 @@ class DefaultJobPersistenceTest {
 
       final Job updated = jobPersistence.getJob(jobId);
       assertEquals(JobStatus.PENDING, updated.getStatus());
-      Assertions.assertNotEquals(created.getUpdatedAtInSecond(), updated.getUpdatedAtInSecond());
+      assertNotEquals(created.getUpdatedAtInSecond(), updated.getUpdatedAtInSecond());
     }
 
     @Test
