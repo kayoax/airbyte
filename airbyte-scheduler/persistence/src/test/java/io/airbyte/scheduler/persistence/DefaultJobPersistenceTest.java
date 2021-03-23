@@ -195,7 +195,7 @@ class DefaultJobPersistenceTest {
         JobStatus.INCOMPLETE,
         Lists.newArrayList(createAttempt(0L, jobId, AttemptStatus.FAILED, LOG_PATH)),
         NOW.getEpochSecond());
-    Assertions.assertEquals(expected, actual);
+    assertEquals(expected, actual);
   }
 
   @Test
@@ -213,7 +213,7 @@ class DefaultJobPersistenceTest {
         JobStatus.SUCCEEDED,
         Lists.newArrayList(createAttempt(0L, jobId, AttemptStatus.SUCCEEDED, LOG_PATH)),
         NOW.getEpochSecond());
-    Assertions.assertEquals(expected, actual);
+    assertEquals(expected, actual);
   }
 
   @Test
@@ -228,7 +228,7 @@ class DefaultJobPersistenceTest {
     jobPersistence.writeOutput(jobId, attemptNumber, jobOutput);
 
     final Job updated = jobPersistence.getJob(jobId);
-    Assertions.assertEquals(Optional.of(jobOutput), updated.getAttempts().get(0).getOutput());
+    assertEquals(Optional.of(jobOutput), updated.getAttempts().get(0).getOutput());
     Assertions.assertNotEquals(created.getAttempts().get(0).getUpdatedAtInSecond(), updated.getAttempts().get(0).getUpdatedAtInSecond());
   }
 
@@ -301,7 +301,7 @@ class DefaultJobPersistenceTest {
         NOW.getEpochSecond());
 
     assertEquals(1, actualList.size());
-    Assertions.assertEquals(expected, actual);
+    assertEquals(expected, actual);
   }
 
   @Test
@@ -350,7 +350,7 @@ class DefaultJobPersistenceTest {
       jobPersistence.cancelJob(jobId);
 
       final Job updated = jobPersistence.getJob(jobId);
-      Assertions.assertEquals(JobStatus.CANCELLED, updated.getStatus());
+      assertEquals(JobStatus.CANCELLED, updated.getStatus());
       Assertions.assertNotEquals(created.getUpdatedAtInSecond(), updated.getUpdatedAtInSecond());
     }
 
@@ -364,7 +364,7 @@ class DefaultJobPersistenceTest {
       jobPersistence.cancelJob(jobId);
 
       final Job updated = jobPersistence.getJob(jobId);
-      Assertions.assertEquals(JobStatus.SUCCEEDED, updated.getStatus());
+      assertEquals(JobStatus.SUCCEEDED, updated.getStatus());
     }
 
   }
@@ -386,7 +386,7 @@ class DefaultJobPersistenceTest {
           JobStatus.RUNNING,
           Lists.newArrayList(createAttempt(0L, jobId, AttemptStatus.RUNNING, LOG_PATH)),
           NOW.getEpochSecond());
-      Assertions.assertEquals(expected, actual);
+      assertEquals(expected, actual);
     }
 
     @Test
@@ -398,12 +398,12 @@ class DefaultJobPersistenceTest {
 
       final Job jobAfterOneAttempts = jobPersistence.getJob(jobId);
       assertEquals(0, attemptNumber1);
-      Assertions.assertEquals(0, jobAfterOneAttempts.getAttempts().get(0).getId());
+      assertEquals(0, jobAfterOneAttempts.getAttempts().get(0).getId());
 
       final int attemptNumber2 = jobPersistence.createAttempt(jobId, LOG_PATH);
       final Job jobAfterTwoAttempts = jobPersistence.getJob(jobId);
       assertEquals(1, attemptNumber2);
-      Assertions.assertEquals(Sets.newHashSet(0L, 1L), jobAfterTwoAttempts.getAttempts().stream().map(Attempt::getId).collect(Collectors.toSet()));
+      assertEquals(Sets.newHashSet(0L, 1L), jobAfterTwoAttempts.getAttempts().stream().map(Attempt::getId).collect(Collectors.toSet()));
     }
 
     @Test
@@ -421,7 +421,7 @@ class DefaultJobPersistenceTest {
           JobStatus.RUNNING,
           Lists.newArrayList(createAttempt(0L, jobId, AttemptStatus.RUNNING, LOG_PATH)),
           NOW.getEpochSecond());
-      Assertions.assertEquals(expected, actual);
+      assertEquals(expected, actual);
     }
 
     @Test
@@ -440,7 +440,7 @@ class DefaultJobPersistenceTest {
           JobStatus.SUCCEEDED,
           Lists.newArrayList(createAttempt(0L, jobId, AttemptStatus.SUCCEEDED, LOG_PATH)),
           NOW.getEpochSecond());
-      Assertions.assertEquals(expected, actual);
+      assertEquals(expected, actual);
     }
 
   }
@@ -456,7 +456,7 @@ class DefaultJobPersistenceTest {
 
       final Job actual = jobPersistence.getJob(jobId);
       final Job expected = createJob(jobId, SPEC_JOB_CONFIG, JobStatus.PENDING, Collections.emptyList(), NOW.getEpochSecond());
-      Assertions.assertEquals(expected, actual);
+      assertEquals(expected, actual);
     }
 
     @Test
@@ -470,7 +470,7 @@ class DefaultJobPersistenceTest {
 
       final Job actual = jobPersistence.getJob(jobId1.get());
       final Job expected = createJob(jobId1.get(), SYNC_JOB_CONFIG, JobStatus.PENDING, Collections.emptyList(), NOW.getEpochSecond());
-      Assertions.assertEquals(expected, actual);
+      assertEquals(expected, actual);
     }
 
     @Test
@@ -485,7 +485,7 @@ class DefaultJobPersistenceTest {
 
       final Job actual = jobPersistence.getJob(jobId2.get());
       final Job expected = createJob(jobId2.get(), SYNC_JOB_CONFIG, JobStatus.PENDING, Collections.emptyList(), NOW.getEpochSecond());
-      Assertions.assertEquals(expected, actual);
+      assertEquals(expected, actual);
     }
 
   }
@@ -504,7 +504,7 @@ class DefaultJobPersistenceTest {
       jobPersistence.failJob(jobId);
 
       final Job updated = jobPersistence.getJob(jobId);
-      Assertions.assertEquals(JobStatus.FAILED, updated.getStatus());
+      assertEquals(JobStatus.FAILED, updated.getStatus());
       Assertions.assertNotEquals(created.getUpdatedAtInSecond(), updated.getUpdatedAtInSecond());
     }
 
@@ -518,7 +518,7 @@ class DefaultJobPersistenceTest {
       jobPersistence.failJob(jobId);
 
       final Job updated = jobPersistence.getJob(jobId);
-      Assertions.assertEquals(JobStatus.SUCCEEDED, updated.getStatus());
+      assertEquals(JobStatus.SUCCEEDED, updated.getStatus());
     }
 
   }
@@ -780,7 +780,7 @@ class DefaultJobPersistenceTest {
       final Job expected = createJob(jobId, SPEC_JOB_CONFIG, JobStatus.PENDING, Collections.emptyList(), NOW.getEpochSecond());
 
       assertEquals(1, actualList.size());
-      Assertions.assertEquals(expected, actual);
+      assertEquals(expected, actual);
     }
 
     @Test
@@ -809,7 +809,7 @@ class DefaultJobPersistenceTest {
           NOW.getEpochSecond());
 
       assertEquals(1, actualList.size());
-      Assertions.assertEquals(expected, actual);
+      assertEquals(expected, actual);
     }
 
     @Test
@@ -834,7 +834,7 @@ class DefaultJobPersistenceTest {
       final List<Job> actualList = jobPersistence.listJobs(SPEC_JOB_CONFIG.getConfigType(), CONNECTION_ID.toString());
 
       assertEquals(2, actualList.size());
-      Assertions.assertEquals(jobId2, actualList.get(0).getId());
+      assertEquals(jobId2, actualList.get(0).getId());
     }
 
   }
@@ -865,7 +865,7 @@ class DefaultJobPersistenceTest {
           NOW.getEpochSecond());
 
       assertEquals(1, actualList.size());
-      Assertions.assertEquals(expected, actual);
+      assertEquals(expected, actual);
     }
 
     @Test
@@ -907,7 +907,7 @@ class DefaultJobPersistenceTest {
       assertEquals(Sets.newHashSet(expectedPendingSpecJob, expectedPendingSyncJob), Sets.newHashSet(allPendingSyncAndSpecJobs));
 
       assertEquals(1, incompleteJobs.size());
-      Assertions.assertEquals(expectedIncompleteJob, actualIncompleteJob);
+      assertEquals(expectedIncompleteJob, actualIncompleteJob);
     }
 
   }
@@ -928,7 +928,7 @@ class DefaultJobPersistenceTest {
       jobPersistence.resetJob(jobId);
 
       final Job updated = jobPersistence.getJob(jobId);
-      Assertions.assertEquals(JobStatus.PENDING, updated.getStatus());
+      assertEquals(JobStatus.PENDING, updated.getStatus());
       Assertions.assertNotEquals(created.getUpdatedAtInSecond(), updated.getUpdatedAtInSecond());
     }
 
@@ -941,7 +941,7 @@ class DefaultJobPersistenceTest {
       assertThrows(IllegalStateException.class, () -> jobPersistence.resetJob(jobId));
 
       final Job updated = jobPersistence.getJob(jobId);
-      Assertions.assertEquals(JobStatus.CANCELLED, updated.getStatus());
+      assertEquals(JobStatus.CANCELLED, updated.getStatus());
     }
 
   }
